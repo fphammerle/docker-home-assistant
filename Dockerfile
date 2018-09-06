@@ -1,16 +1,14 @@
 FROM python:3.7
 
-ENV HASS_USER hass
-ENV HASS_HOME "/home/${HASS_USER}"
+RUN find /usr/bin -type f -perm /u+s -exec echo chmod --changes u-s {} \;
+RUN find /usr/bin -type f -perm /g+s -exec echo chmod --changes g-s {} \;
 
-RUN useradd --home-dir "$HASS_HOME" --create-home "$HASS_USER" \
-    && chown hass:hass "$HASS_HOME"
-USER "$HASS_USER"
+VOLUME /config
 
-ENV PATH "${HASS_HOME}/.local/bin:${PATH}"
+RUN useradd --create-home hass && chown hass ~hass
+USER hass
+ENV PATH "/home/hass/.local/bin:${PATH}"
 
-COPY ./python-requirements.txt .
-RUN pip install --user --no-cache-dir --requirement python-requirements.txt
+RUN pip install --user --no-cache-dir homeassistant
 
-EXPOSE 8123
-CMD ["python", "-m", "homeassistant"]
+CMD ["python", "-m", "homeassistant", "--config", "/config"]
