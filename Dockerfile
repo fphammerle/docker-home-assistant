@@ -13,6 +13,12 @@ RUN useradd --create-home hass && chown hass ~hass
 USER hass
 ENV PATH "/home/hass/.local/bin:${PATH}"
 
-RUN pip install --user --no-cache-dir homeassistant
+COPY --chown=hass ./runtime-requirements.txt /tmp
+RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.txt \
+    && rm /tmp/runtime-requirements.txt
+
+RUN pip install --user --no-cache-dir \
+    homeassistant==0.78.0 \
+    home-assistant-frontend==20180916.0
 
 CMD ["python", "-m", "homeassistant", "--config", "/config"]
