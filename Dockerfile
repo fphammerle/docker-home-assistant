@@ -18,7 +18,7 @@ RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.tx
     && rm /tmp/runtime-requirements.txt
 
 RUN pip install --user --no-cache-dir \
-    homeassistant==0.78.0 \
-    home-assistant-frontend==20180916.0
+    homeassistant==0.80.2 \
+    home-assistant-frontend==20181017.0
 
 CMD ["python", "-m", "homeassistant", "--config", "/config"]
