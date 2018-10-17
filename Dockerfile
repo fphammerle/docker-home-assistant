@@ -17,6 +17,8 @@ COPY --chown=hass ./runtime-requirements.txt /tmp
 RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.txt \
     && rm /tmp/runtime-requirements.txt
 
+RUN pip install --user --no-cache-dir cryptography==2.3.1
+
 RUN pip install --user --no-cache-dir \
     homeassistant==0.80.2 \
     home-assistant-frontend==20181017.0
