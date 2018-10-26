@@ -20,7 +20,7 @@ RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.tx
 RUN pip install --user --no-cache-dir cryptography==2.3.1
 
 RUN pip install --user --no-cache-dir \
-    homeassistant==0.80.2 \
-    home-assistant-frontend==20181017.0
+    homeassistant==0.80.3 \
+    home-assistant-frontend==20181018.0
 
 CMD ["python", "-m", "homeassistant", "--config", "/config"]
