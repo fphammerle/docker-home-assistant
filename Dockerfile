@@ -16,13 +16,14 @@ VOLUME /config
 USER hass
 ENV PATH "/home/hass/.local/bin:${PATH}"
 
+# https://github.com/home-assistant/home-assistant/blob/0.86.4/requirements_all.txt
 RUN pip install --user --no-cache-dir homeassistant-pyozw==0.1.2
 COPY --chown=hass ./runtime-requirements.txt /tmp
 RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.txt \
     && rm /tmp/runtime-requirements.txt
 
 RUN pip install --user --no-cache-dir \
-    homeassistant==0.85.1 \
-    home-assistant-frontend==20190109.1
+    homeassistant==0.86.4 \
+    home-assistant-frontend==20190121.1
 
 CMD ["python", "-m", "homeassistant", "--config", "/config"]
