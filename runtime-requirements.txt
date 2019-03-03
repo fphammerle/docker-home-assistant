@@ -4,7 +4,11 @@ PyQRCode==1.2.1
 aiohttp_cors==0.7.0
 distro==1.3.0
 flux_led==0.21
+gTTS-token==1.1.2
+mutagen==1.41.1
 netdisco==2.1.0
 pydispatcher==2.0.5
 pyotp==2.2.6
 sqlalchemy==1.2.11
+warrant==0.6.1
+xmltodict==0.11.0
