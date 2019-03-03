@@ -1,0 +1,12 @@
+# ansible's docker_service module does not support compose version 3 yet
+# https://docs.ansible.com/ansible/latest/modules/docker_service_module.html
+version: '2'
+
+services:
+  homeassistant:
+    build: .
+    image: fphammerle/home-assistant
+    ports: ['8124:8124']
+    restart: on-failure
+
+# https://docs.docker.com/compose/compose-file/compose-file-v2/
