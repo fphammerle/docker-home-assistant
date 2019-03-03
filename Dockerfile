@@ -15,13 +15,13 @@ VOLUME /config
 USER hass
 ENV PATH "/home/hass/.local/bin:${PATH}"
 
-RUN pip install --user --no-cache-dir python_openzwave==0.4.9
+RUN pip install --user --no-cache-dir homeassistant-pyozw==0.1.2
 COPY --chown=hass ./runtime-requirements.txt /tmp
 RUN pip install --user --no-cache-dir --requirement /tmp/runtime-requirements.txt \
     && rm /tmp/runtime-requirements.txt
 
 RUN pip install --user --no-cache-dir \
-    homeassistant==0.80.3 \
-    home-assistant-frontend==20181018.0
+    homeassistant==0.85.1 \
+    home-assistant-frontend==20190109.1
 
 CMD ["python", "-m", "homeassistant", "--config", "/config"]
