@@ -1,10 +1,10 @@
 # docker: home assistant 🏡🐳
 
-imple wrapper for
+simple wrapper for
 [home-assistant](https://github.com/home-assistant/home-assistant)'s
 [official docker image](https://hub.docker.com/r/homeassistant/home-assistant).
 
-differences:
+changes:
 * dropped `setuid` and `setgid` permission bits from all files
 * run home assistant as an unprivileged user (instead of `root`)
 
