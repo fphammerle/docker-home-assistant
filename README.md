@@ -1,18 +1,31 @@
-https://www.home-assistant.io/docs/installation/docker/
+# docker: home assistant 🏡🐳
 
-https://github.com/home-assistant/home-assistant/blob/dev/virtualization/Docker/setup_docker_prereqs
+imple wrapper for
+[home-assistant](https://github.com/home-assistant/home-assistant)'s
+[official docker image](https://hub.docker.com/r/homeassistant/home-assistant).
 
-https://github.com/home-assistant/home-assistant/blob/dev/requirements_all.txt
+differences:
+* dropped `setuid` and `setgid` permission bits from all files
+* run home assistant as an unprivileged user (instead of `root`)
+
+guide: https://www.home-assistant.io/docs/installation/docker/
+
+dockerfile: https://git.hammerle.me/fphammerle/docker-home-assistant/src/master/dockerfile
 
 ```sh
-$ sudo docker build --tag=home-assistant .
-$ sudo docker volume create home-assistant-config
+$ sudo docker run --name home_assistant \
+    -v home_assistant_config:/config:rw \
+    -p 8123:8123 \
+    --security-opt=no-new-privileges --cap-drop=all \
+    --restart unless-stopped \
+    fphammerle/home-assistant
+```
+
+## mount zwave dongle
+
+```
 $ cat /etc/udev/rules.d/zwave.rules
 ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="zwave-dongle"
 # check permissions of /dev/zwave-dongle
-$ sudo docker run --rm --publish=8123:8123 \
-    --mount "source=home-assistant-config,target=/config,rw" \
-    --device /dev/zwave-dongle:/dev/zwave-dongle \
-    --security-opt=no-new-privileges --cap-drop=all \
-    home-assistant
+$ sudo docker run --device /dev/zwave-dongle:/dev/zwave-dongle …
 ```

@@ -2,11 +2,16 @@
 # https://docs.ansible.com/ansible/latest/modules/docker_service_module.html
 version: '2'
 
+volumes:
+  config:
+
 services:
   homeassistant:
     build: .
     image: fphammerle/home-assistant
-    ports: ['8124:8124']
+    volumes: ['config:/config:rw']
+    ports: ['127.0.0.1:8123:8123']
     restart: on-failure
+    security_opt: [no-new-privileges]
 
 # https://docs.docker.com/compose/compose-file/compose-file-v2/
