@@ -10,7 +10,7 @@ changes:
 
 guide: https://www.home-assistant.io/docs/installation/docker/
 
-dockerfile: https://git.hammerle.me/fphammerle/docker-home-assistant/src/master/dockerfile
+dockerfile: https://git.hammerle.me/fphammerle/docker-home-assistant/src/master/Dockerfile
 
 ```sh
 $ sudo docker run --name home_assistant \
