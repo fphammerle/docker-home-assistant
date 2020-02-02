@@ -32,12 +32,16 @@ $ sudo docker run --device /dev/zwave-dongle:/dev/zwave-dongle …
 
 ## mount `/proc/device-tree`
 
-required by `Adafruit-DHT`:
+Required by `Adafruit-DHT`:
 https://github.com/adafruit/Adafruit_Python_DHT/blob/a609d7dcfb2b8208b88498c54a5c099e55159636/source/Raspberry_Pi_2/pi_2_mmio.c#L43
 
 `/proc/device-tree` is a symlink to `/sys/firmware/devicetree/base`.
 
 However, `docker run -v /sys/firmware/devicetree/base:/sys/firmware/devicetree/base:ro …` is ineffective.
+
+Docker masks `/sys/firmware`:
+https://github.com/moby/moby/pull/26618
+https://github.com/docker/docker-ce/blob/v19.03.5/components/engine/oci/defaults.go#L127
 
 Evil workaround:
 ```sh
