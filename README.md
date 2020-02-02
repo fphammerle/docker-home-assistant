@@ -29,3 +29,20 @@ ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea6
 # check permissions of /dev/zwave-dongle
 $ sudo docker run --device /dev/zwave-dongle:/dev/zwave-dongle …
 ```
+
+## mount `/proc/device-tree`
+
+required by `Adafruit-DHT`:
+https://github.com/adafruit/Adafruit_Python_DHT/blob/a609d7dcfb2b8208b88498c54a5c099e55159636/source/Raspberry_Pi_2/pi_2_mmio.c#L43
+
+`/proc/device-tree` is a symlink to `/sys/firmware/devicetree/base`.
+
+However, `docker run -v /sys/firmware/devicetree/base:/sys/firmware/devicetree/base:ro …` is ineffective.
+
+Evil workaround:
+```sh
+# start container without explicitly mounting devicetree
+$ sudo docker run --name home_assistant …
+# umount shadowing tmpfs
+$ sudo nsenter --target $(sudo docker inspect --format={{.State.Pid}} home_assistant) --mount umount /sys/firmware
+```
