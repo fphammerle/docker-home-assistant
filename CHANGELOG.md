@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.2] - 2020-05-03
 ### Fixed
 - fix container startup for home assistant `>=0.107.0`
   by replacing [s6-overlay](https://github.com/home-assistant/docker-base/pull/62) entrypoint with `tini`
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - docker-compose: forward correct default port `8123`
 
-[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.1...master
+[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.2...master
+[1.0.2]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/fphammerle/docker-home-assistant/releases/tag/v1.0.0
+[1.0.0]: https://github.com/fphammerle/docker-home-assistant/tree/v1.0.0
