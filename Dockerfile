@@ -1,4 +1,5 @@
-ARG HOME_ASSISTANT_VERSION=0.104.3
+# https://github.com/home-assistant/core/blob/0.107.0/azure-pipelines-release.yml#L76
+ARG HOME_ASSISTANT_VERSION=0.107.0
 FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 
 # Adafruit-DHT: no wheel available
@@ -17,10 +18,8 @@ FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 # but no 'Adafruit-DHT'
 RUN apk add --no-cache \
     gcc \
-    musl-dev
-
-# inherited:
-# CMD ["python3", "-m", "homeassistant", "--config", "/config"]
+    musl-dev \
+    tini
 
 # not inherited:
 EXPOSE 8123/tcp
@@ -35,3 +34,19 @@ RUN python3 -c 'import os; assert os.geteuid() == 0, "finally..."' \
     && echo -e '[install]\nuser = yes' > ~hass/.config/pip/pip.conf
 VOLUME /config
 USER hass
+
+# > $ docker inspect --format '{{json .Config.Entrypoint}}' homeassistant/home-assistant:0.106.6
+# > ["/bin/entry.sh"]
+# > $ dockerinspect --format '{{json .Config.Cmd}}' homeassistant/home-assistant:0.106.6
+# > ["python3","-m","homeassistant","--config","/config"]
+# > $ dockerinspect --format '{{json .Config.Entrypoint}}' homeassistant/home-assistant:0.107.0
+# > ["/init"]
+# > $ dockerinspect --format '{{json .Config.Cmd}}' homeassistant/home-assistant:0.107.0
+# > null
+# see https://github.com/home-assistant/docker-base/pull/62
+# > For now, `s6-overlay` doesn't support running it with a user different than `root`, so consequently Dockerfile `USER` directive is not supported (except `USER root` of course ;P).
+# src: https://github.com/just-containers/s6-overlay/blame/v1.22.1.0/README.md#L420
+# workaround: disable useless (but annoying) s6-overlay
+ENTRYPOINT ["tini", "--"]
+# default in home-assistant<0.107.0
+CMD ["python3", "-m", "homeassistant", "--config", "/config"]
