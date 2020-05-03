@@ -1,5 +1,5 @@
-# https://github.com/home-assistant/core/blob/0.107.0/azure-pipelines-release.yml#L76
-ARG HOME_ASSISTANT_VERSION=0.107.0
+# https://github.com/home-assistant/core/blob/0.109.3/azure-pipelines-release.yml#L76
+ARG HOME_ASSISTANT_VERSION=0.109.3
 FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 
 # Adafruit-DHT: no wheel available
