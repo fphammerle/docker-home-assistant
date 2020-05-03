@@ -12,6 +12,8 @@ guide: https://www.home-assistant.io/docs/installation/docker/
 
 dockerfile: https://git.hammerle.me/fphammerle/docker-home-assistant/src/master/Dockerfile
 
+signed docker image hashes: https://github.com/fphammerle/docker-home-assistant/tags
+
 ```sh
 $ sudo docker run --name home_assistant \
     -v home_assistant_config:/config:rw \
