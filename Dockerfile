@@ -1,6 +1,6 @@
-# https://hub.docker.com/r/homeassistant/home-assistant/tags 
+# https://hub.docker.com/r/homeassistant/home-assistant/tags
 # https://github.com/home-assistant/core/blob/0.109.3/azure-pipelines-release.yml#L76
-ARG HOME_ASSISTANT_VERSION=2020.12.2
+ARG HOME_ASSISTANT_VERSION=2021.1.5
 FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 
 # Adafruit-DHT: no wheel available
@@ -17,6 +17,7 @@ FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 #> Adafruit-PureIO==1.0.4
 #> Adafruit-SHT31==1.0.2
 # but no 'Adafruit-DHT'
+# hadolint ignore=DL3018
 RUN apk add --no-cache \
     gcc \
     musl-dev \
