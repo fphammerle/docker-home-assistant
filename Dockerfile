@@ -35,6 +35,10 @@ RUN python3 -c 'import os; assert os.geteuid() == 0, "finally..."' \
     && mkdir -p ~hass/.config/pip \
     && echo -e '[install]\nuser = yes' > ~hass/.config/pip/pip.conf
 VOLUME /config
+# > WARNING (MainThread) [matplotlib] Matplotlib created a temporary config/cache directory at /tmp/matplotlib-[...] \
+# > it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, \
+# > in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ENV MPLCONFIGDIR=/config/matplotlib
 USER hass
 
 # > $ docker inspect --format '{{json .Config.Entrypoint}}' homeassistant/home-assistant:0.106.6
