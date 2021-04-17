@@ -52,3 +52,9 @@ USER hass
 ENTRYPOINT ["tini", "--"]
 # default in home-assistant<0.107.0
 CMD ["python3", "-m", "homeassistant", "--config", "/config"]
+
+# https://github.com/opencontainers/image-spec/blob/v1.0.1/annotations.md
+ARG REVISION=
+LABEL org.opencontainers.image.title="homeassistant/home-assistant:$HOME_ASSISTANT_VERSION running as unprivileged user" \
+    org.opencontainers.image.source="https://github.com/fphammerle/docker-home-assistant" \
+    org.opencontainers.image.revision="$REVISION"

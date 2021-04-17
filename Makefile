@@ -1,24 +1,34 @@
 # sync with https://github.com/fphammerle/docker-onion-service/blob/master/Makefile
 
-DOCKER_IMAGE_NAME := docker.io/fphammerle/home-assistant
-DOCKER_TAG_VERSION := $(shell git describe --match=v* --abbrev=0 --dirty | sed -e 's/^v//')
-TOR_PACKAGE_VERSION := $(shell grep -Po 'HOME_ASSISTANT_VERSION=\K.+' Dockerfile | tr -d -)
-ARCH := $(shell arch)
-DOCKER_TAG_ARCH_SUFFIX_aarch64 := arm64
-DOCKER_TAG_ARCH_SUFFIX_armv6l := armv6
-DOCKER_TAG_ARCH_SUFFIX_armv7l := armv7
-DOCKER_TAG_ARCH_SUFFIX_x86_64 := amd64
-DOCKER_TAG_ARCH_SUFFIX = ${DOCKER_TAG_ARCH_SUFFIX_${ARCH}}
-DOCKER_TAG = ${DOCKER_TAG_VERSION}-homeassistant${TOR_PACKAGE_VERSION}-${DOCKER_TAG_ARCH_SUFFIX}
+IMAGE_NAME := docker.io/fphammerle/home-assistant
+PROJECT_VERSION := $(shell git describe --match=v* --abbrev=0 --dirty)
+HOMEASSISTANT_VERSION := $(shell grep -Po 'HOME_ASSISTANT_VERSION=\K.+' Dockerfile)
+ARCH = $(shell arch)
+# architecture[arm_variant]
+# https://github.com/opencontainers/image-spec/blob/v1.0.1/image-index.md#image-index-property-descriptions
+IMAGE_TAG_ARCH_aarch64 = arm64
+IMAGE_TAG_ARCH_armv6l = armv6
+IMAGE_TAG_ARCH_armv7l = armv7
+IMAGE_TAG_ARCH_x86_64 = amd64
+IMAGE_TAG_ARCH = ${IMAGE_TAG_ARCH_${ARCH}}
+IMAGE_TAG = ${PROJECT_VERSION}-homeassistant${HOMEASSISTANT_VERSION}-${IMAGE_TAG_ARCH}
+BUILD_PARAMS = --tag="${IMAGE_NAME}:${IMAGE_TAG}" \
+	--build-arg=REVISION="$(shell git rev-parse HEAD)"
 
-.PHONY: docker-build docker-push
+.PHONY: worktree-clean docker-build podman-build docker-push
 
-docker-build:
+worktree-clean:
 	git diff --exit-code
 	git diff --staged --exit-code
-	sudo docker build -t "${DOCKER_IMAGE_NAME}:${DOCKER_TAG}" .
+
+docker-build: worktree-clean
+	sudo docker build ${BUILD_PARAMS} .
+
+podman-build: worktree-clean
+	# --format=oci (default) not fully supported by hub.docker.com
+	# https://github.com/docker/hub-feedback/issues/1871#issuecomment-748924149
+	podman build --format=docker ${BUILD_PARAMS} .
 
 docker-push: docker-build
-	sudo docker push "${DOCKER_IMAGE_NAME}:${DOCKER_TAG}"
-	sleep 4 # wait for repo digest
-	@echo git tag --sign --message '$(shell sudo docker image inspect --format '{{join .RepoDigests "\n"}}' "${DOCKER_IMAGE_NAME}:${DOCKER_TAG}")' docker/${DOCKER_TAG} $(shell git rev-parse HEAD)
+	sudo docker push "${IMAGE_NAME}:${IMAGE_TAG}"
+	@echo git tag --sign --message '$(shell sudo docker image inspect --format '{{join .RepoDigests "\n"}}' "${IMAGE_NAME}:${IMAGE_TAG}")' docker/${IMAGE_TAG} $(shell git rev-parse HEAD)
