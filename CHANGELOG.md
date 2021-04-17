@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `org.opencontainers.image.source` (repo url)
   - `org.opencontainers.image.title`
 - set env var `MPLCONFIGDIR=/config/matplotlib`
+- `docker-compose`: added CPU & memory limit
 
 ### Fixed
 - `docker-compose`: drop capabilities

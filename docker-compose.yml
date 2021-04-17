@@ -1,4 +1,4 @@
-version: '2'
+version: '2.2'
 
 volumes:
   config:
@@ -12,6 +12,9 @@ services:
     ports: ['127.0.0.1:8123:8123']
     cap_drop: [ALL]
     security_opt: [no-new-privileges]
+    # docker-compose >=2.2,<3
+    cpus: 2
+    mem_limit: 512M
     restart: on-failure
 
 # https://docs.docker.com/compose/compose-file/compose-file-v2/
