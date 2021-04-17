@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2021-04-17
 ### Fixed
 - fixed empty home-assistant version string in `org.opencontainers.image.title` label
 - `docker-compose`: fix support for home-assistant images `>=2021.4.0` by mounting `tmpfs` for `async_dns`
@@ -46,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - docker-compose: forward correct default port `8123`
 
-[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.1.0...master
+[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.1.1...master
+[1.1.1]: https://github.com/fphammerle/docker-home-assistant/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.0...v1.0.1
