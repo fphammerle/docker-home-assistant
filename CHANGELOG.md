@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - fixed empty home-assistant version string in `org.opencontainers.image.title` label
+- `docker-compose`: fix support for home-assistant images `>=2021.4.0` by mounting `tmpfs` for `async_dns`
+  (fixes: `PermissionError: [Errno 13] Permission denied: '/home/hass/.config/async_dns'`)
 
 ## [1.1.0] - 2021-04-17
 ### Added

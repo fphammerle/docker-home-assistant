@@ -1,4 +1,4 @@
-version: '2.2'
+version: '2.3'
 
 volumes:
   config:
@@ -8,7 +8,29 @@ services:
     build: .
     image: fphammerle/home-assistant
     #read_only: true
-    volumes: ['config:/config:rw']
+    volumes:
+    - type: volume
+      source: config
+      target: /config
+      read_only: false
+    - type: tmpfs
+      # workaround for async_dns<1.1.10:
+      # >   File "/usr/local/lib/python3.8/site-packages/async_dns/core/config/root.py", line 16, in <module>
+      # >     os.makedirs(CONFIG_DIR, exist_ok=True)
+      # >   File "/usr/local/lib/python3.8/os.py", line 223, in makedirs
+      # >     mkdir(name, mode)
+      # > PermissionError: [Errno 13] Permission denied: '/home/hass/.config/async_dns'
+      # introduced in https://github.com/gera2ld/async_dns/commit/16cf6361ebfcc62fc6339e5194d013e8a8607fa2
+      # injected into home-assistant image >=2021.4.0 via
+      # - https://github.com/bdraco/aiodiscover/commit/d1db9a79df7c56b7930f04a79a36c2360ce8cd18#diff-610f365ee23052059bddd764ee702dce7e295c7b6563f1fd8980c8995205e079R6
+      # - https://github.com/home-assistant/core/commit/2ff94c8ed9fecd4dd7984d1f2d2600289c983a8b#diff-e441c4ef86b6cbecc1fe68515ed64a515941c872a72b40e85efbefc66ecb41b4R3
+      # fix: https://github.com/gera2ld/async_dns/pull/23/files
+      # https://github.com/gera2ld/async_dns/pull/23/commits/2e2bfd2a6428997191dce16d99d5a6d7ab70acd1
+      # related issue: https://github.com/home-assistant/core/issues/49205
+      target: /home/hass/.config/async_dns
+      tmpfs:
+        mode: 1777
+        size: 4k
     ports: ['127.0.0.1:8123:8123']
     cap_drop: [ALL]
     security_opt: [no-new-privileges]
