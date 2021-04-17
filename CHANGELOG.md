@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `org.opencontainers.image.title`
 - set env var `MPLCONFIGDIR=/config/matplotlib`
 
+### Fixed
+- `docker-compose`: drop capabilities
+
 ## [1.0.2] - 2020-05-03
 ### Fixed
 - fix container startup for home assistant `>=0.107.0`
