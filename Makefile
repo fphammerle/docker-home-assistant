@@ -1,7 +1,7 @@
 # sync with https://github.com/fphammerle/docker-onion-service/blob/master/Makefile
 
 IMAGE_NAME := docker.io/fphammerle/home-assistant
-PROJECT_VERSION := $(shell git describe --match=v* --abbrev=0 --dirty)
+PROJECT_VERSION = $(shell git describe --match=v* --abbrev=0 --dirty | sed -e 's/^v//')
 HOMEASSISTANT_VERSION := $(shell grep -Po 'HOME_ASSISTANT_VERSION=\K.+' Dockerfile)
 ARCH = $(shell arch)
 # architecture[arm_variant]
