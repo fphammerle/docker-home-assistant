@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.1.0] - 2021-04-17
 ### Added
 - image labels:
   - `org.opencontainers.image.revision` (git commit hash via build arg)
@@ -39,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - docker-compose: forward correct default port `8123`
 
-[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.2...master
+[Unreleased]: https://github.com/fphammerle/docker-home-assistant/compare/v1.1.0...master
+[1.1.0]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/fphammerle/docker-home-assistant/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/fphammerle/docker-home-assistant/tree/v1.0.0
