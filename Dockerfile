@@ -17,6 +17,9 @@ FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 #> Adafruit-PureIO==1.0.4
 #> Adafruit-SHT31==1.0.2
 # but no 'Adafruit-DHT'
+# home-assistant/core v2021.5.0 replaced Adafruit-DHT with circuitpython
+# https://github.com/home-assistant/core/commit/d6c01cc0e60439ceb89df5feafc1bcb4e0892357
+# https://github.com/home-assistant/core/commit/c4a2dd5c3d91aea60f082d1ba2c253988b3b4c79
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
     gcc \
