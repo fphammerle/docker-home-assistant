@@ -1,7 +1,7 @@
 # https://hub.docker.com/r/homeassistant/home-assistant/tags
 # https://github.com/home-assistant/core/blob/0.109.3/azure-pipelines-release.yml#L76
 ARG HOME_ASSISTANT_VERSION=2021.7.2
-FROM homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
+FROM homeassistant/raspberrypi-homeassistant:$HOME_ASSISTANT_VERSION
 
 # Adafruit-DHT: no wheel available
 # https://pypi.org/project/Adafruit-DHT/1.4.0/#files
@@ -36,7 +36,8 @@ RUN python3 -c 'import os; assert os.geteuid() == 0, "finally..."' \
     && adduser -D hass \
     && chown hass /config \
     && mkdir -p ~hass/.config/pip \
-    && echo -e '[install]\nuser = yes' > ~hass/.config/pip/pip.conf
+    && echo -e '[install]\nuser = yes' > ~hass/.config/pip/pip.conf \
+    && printf "try:\n\timport RPi.GPIO\nexcept RuntimeError:\n\tpass" | python3
 VOLUME /config
 # > WARNING (MainThread) [matplotlib] Matplotlib created a temporary config/cache directory at /tmp/matplotlib-[...] \
 # > it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, \
@@ -63,6 +64,6 @@ CMD ["python3", "-m", "homeassistant", "--config", "/config"]
 # https://github.com/opencontainers/image-spec/blob/v1.0.1/annotations.md
 ARG HOME_ASSISTANT_VERSION
 ARG REVISION=
-LABEL org.opencontainers.image.title="homeassistant/home-assistant:$HOME_ASSISTANT_VERSION running as unprivileged user" \
+LABEL org.opencontainers.image.title="homeassistant/raspberrypi-homeassistant:$HOME_ASSISTANT_VERSION running as unprivileged user" \
     org.opencontainers.image.source="https://github.com/fphammerle/docker-home-assistant" \
     org.opencontainers.image.revision="$REVISION"

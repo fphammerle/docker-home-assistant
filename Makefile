@@ -3,7 +3,7 @@
 IMAGE_NAME := docker.io/fphammerle/home-assistant
 PROJECT_VERSION = $(shell git describe --match=v* --abbrev=0 --dirty | sed -e 's/^v//')
 HOMEASSISTANT_VERSION := $(shell grep -Po 'HOME_ASSISTANT_VERSION=\K.+' Dockerfile)
-ARCH = $(shell arch)
+ARCH = armv6l
 # architecture[arm_variant]
 # https://github.com/opencontainers/image-spec/blob/v1.0.1/image-index.md#image-index-property-descriptions
 IMAGE_TAG_ARCH_aarch64 = arm64
@@ -11,7 +11,7 @@ IMAGE_TAG_ARCH_armv6l = armv6
 IMAGE_TAG_ARCH_armv7l = armv7
 IMAGE_TAG_ARCH_x86_64 = amd64
 IMAGE_TAG_ARCH = ${IMAGE_TAG_ARCH_${ARCH}}
-IMAGE_TAG = ${PROJECT_VERSION}-homeassistant${HOMEASSISTANT_VERSION}-${IMAGE_TAG_ARCH}
+IMAGE_TAG = ${PROJECT_VERSION}-homeassistant${HOMEASSISTANT_VERSION}-raspberrypi-${IMAGE_TAG_ARCH}
 BUILD_PARAMS = --tag="${IMAGE_NAME}:${IMAGE_TAG}" \
 	--build-arg=REVISION="$(shell git rev-parse HEAD)"
 
