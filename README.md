@@ -18,7 +18,7 @@ signed docker image hashes: https://github.com/fphammerle/docker-home-assistant/
 $ sudo docker run --name home_assistant \
     -v home_assistant_config:/config:rw \
     -p 8123:8123 \
-    --read-only --tmpfs /home/hass/.config/async_dns:mode=1777,size=4k
+    --read-only --tmpfs /home/hass/.config/async_dns:mode=1777,size=4k \
     --security-opt=no-new-privileges --cap-drop=all \
     --restart unless-stopped \
     fphammerle/home-assistant
