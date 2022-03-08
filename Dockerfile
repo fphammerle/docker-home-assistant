@@ -1,6 +1,6 @@
 # https://hub.docker.com/r/homeassistant/home-assistant/tags
 # https://github.com/home-assistant/core/blob/0.109.3/azure-pipelines-release.yml#L76
-ARG HOME_ASSISTANT_VERSION=2021.11.5
+ARG HOME_ASSISTANT_VERSION=2022.3.2
 FROM docker.io/homeassistant/home-assistant:$HOME_ASSISTANT_VERSION
 
 # Adafruit-DHT: no wheel available
